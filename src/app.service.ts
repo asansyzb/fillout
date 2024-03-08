@@ -88,7 +88,7 @@ export class AppService {
     status,
     includeEditLink,
     sort,
-  }: Omit<QuerySchemaType, 'filters'>): string {
+  }: Omit<QuerySchemaType, 'filters' | 'limit' | 'offset'>): string {
     const searchParams: Record<string, string> = {};
 
     if (sort) {
