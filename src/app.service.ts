@@ -67,9 +67,6 @@ export class AppService {
       const totalResponses = filteredResponses.length;
       const pageCount = Math.ceil(filteredResponses.length / limit);
 
-      console.log('limit-offset', limit, offset);
-      console.log(responses.length, filteredResponses.length);
-
       return {
         responses,
         totalResponses,
