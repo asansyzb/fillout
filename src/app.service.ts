@@ -18,12 +18,11 @@ export class AppService {
   ): Promise<ApiResponse> {
     const limit = query.limit ? query.limit : 250;
     const offset = query.offset ? query.offset : 0;
+    const url = new URL(
+      `https://api.fillout.com/v1/api/forms/${formId}/submissions?${this.formSearchParams(query)}`,
+    ).toString();
 
     try {
-      const url = new URL(
-        `https://api.fillout.com/v1/api/forms/${formId}/submissions?${this.formSearchParams(query)}`,
-      ).toString();
-
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${this.apiKey}`,
@@ -36,8 +35,8 @@ export class AppService {
         return response.data;
       }
 
-      const filteredResponses = data.responses.filter((response) => {
-        return filters.every((filter) => {
+      const filteredResponses = data.responses.filter((response) =>
+        filters.every((filter) => {
           const question = response.questions.find((q) => q.id === filter.id);
 
           if (!question) {
@@ -61,8 +60,8 @@ export class AppService {
               return false;
             }
           }
-        });
-      });
+        }),
+      );
 
       const responses = filteredResponses.slice(offset, limit + offset);
       const totalResponses = filteredResponses.length;
